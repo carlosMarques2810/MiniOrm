@@ -139,11 +139,11 @@ class Table(metaclass=TableMeta):
             if getattr(field, "auto_increment", False) and value is None:
                 continue
 
-            if getattr(field, "auto_increment", False) and value is not None:
+            if (getattr(field, "auto_increment", False) and value is not None) or getattr(field, "unique", False):
                 with Connection() as cursor:
                     cursor.execute(f"SELECT COUNT(*) FROM {table_name} WHERE {name} = ?", (value,))
                     if cursor.fetchone()[0] > 0:
-                        raise ValueError(f"ID {value} alredy exists in table '{table_name}")
+                        raise ValueError(f"{name} {value} alredy exists in table '{table_name}")
                     
             columns.append(name)
             values.append(value)
@@ -156,6 +156,8 @@ class Table(metaclass=TableMeta):
             if any(getattr(f, "auto_increment", False) for f in fields.values()):
                 object.__setattr__(self, "id", cursor.lastrowid)
         object.__setattr__(self, "_saved", True)
+
+        return self
 
     @classmethod
     def select(cls, where=None, limit=None, **kwargs):

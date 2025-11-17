@@ -1,5 +1,5 @@
 import pytest
-from classes.model import Field
+from classes.fields import Field
 
 def test_fields_success():
     integerField = Field(int, default=1)

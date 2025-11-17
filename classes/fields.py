@@ -92,6 +92,9 @@ class Field:
     def validate(self, value=None):
         if value is None and not self.default and not (self.null or self.blank):
             raise ValueError("A value is required for this field.")
+
+        if self.field_type is str and self.max_length and len(value) > self.max_length:
+            raise ValueError(f"The value cannot exceed {self.max_length} characters")
         
         if value is None and not self.default and (self.null or self.blank):
             return None
