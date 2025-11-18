@@ -95,6 +95,9 @@ class Field:
 
         if self.field_type is str and self.max_length and len(value) > self.max_length:
             raise ValueError(f"The value cannot exceed {self.max_length} characters")
+
+        if self.field_type is bool and (value == 1 or value == 0):
+            value = True if value else False 
         
         if value is None and not self.default and (self.null or self.blank):
             return None

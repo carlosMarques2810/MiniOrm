@@ -120,7 +120,7 @@ class Table(metaclass=TableMeta):
                 sql = table.create_table()
                 print(f"Criando a tablea: {table.__name__}")
                 cursor.execute(sql)
-        print("Todas as tabelas fora, criadas com sucesso!")
+        print("Todas as tabelas foram, criadas com sucesso!")
 
     def insert(self):
         """

@@ -2,3 +2,4 @@
 venv/
 **.db
 models.py
+queryset.py
